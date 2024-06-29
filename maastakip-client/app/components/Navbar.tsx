@@ -23,32 +23,58 @@ import {
 } from "@/components/ui/navigation-menu";
 import { SITE_NAME } from "../config/constants";
 import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@radix-ui/react-accordion";
+  Icon,
+  IconCurrencyLira,
+  IconFileInvoice,
+  IconHeartHandshake,
+  IconHelp,
+  IconHome,
+  IconInvoice,
+  IconLogin,
+  IconMoneybag,
+  IconUserPlus,
+} from "@tabler/icons-react";
+import AuthDrawer from "./AuthDrawer";
 
-// Menu items definition
-const menuItems = [
-  { name: "Ana Sayfa", href: "/", children: [] },
+// Menü öğeleri için bir tür tanımlayın
+interface MenuItem {
+  name: string;
+  href: string;
+  children: MenuItem[];
+  description?: string;
+  icon?: Icon;
+}
+
+// Menü öğelerini tanımlayın
+const menuItems: MenuItem[] = [
+  { name: "Ana Sayfa", href: "/", children: [], icon: IconHome },
   {
     name: "Maaş işlemleri",
     href: "#",
+    icon: IconMoneybag,
     children: [
       {
         name: "Brütten Net Maaş Hesaplama",
         href: "/brutten-net-maas-hesaplama",
-        description: "Check out our pricing plans.",
+        description: "Brütten net maaşınızı hesaplayın.",
+        icon: IconCurrencyLira,
+        children: [],
       },
       {
         name: "Netten Brüt Maaş Hesaplama",
         href: "/netten-brut-maas-hesaplama",
-        description: "Learn more about our company.",
+        description: "Net maaşınızı brüt maaşa dönüştürün.",
+        icon: IconInvoice,
+        children: [],
       },
     ],
   },
-  { name: "Destek Ol", href: "/destek", children: [] },
+  {
+    name: "Destek Ol",
+    href: "/destek",
+    children: [],
+    icon: IconHeartHandshake,
+  },
 ];
 
 export default function Component() {
@@ -82,7 +108,7 @@ export default function Component() {
             }`}
           />
           <span
-            className={`font-bold transition-all duration-300 ${
+            className={`font-bold transition-all duration-300 text-primary ${
               isScrolled ? "text-sm" : "text-lg"
             }`}
           >
@@ -135,8 +161,8 @@ export default function Component() {
               </div>
 
               <DrawerFooter>
-                <Button variant="outline">Giriş Yap</Button>
-                <Button>Kayıt Ol</Button>
+                <AuthDrawer defaultTab={"login"}></AuthDrawer>
+                <AuthDrawer defaultTab={"register"}></AuthDrawer>
                 <DrawerClose asChild>
                   <Button variant="link">Kapat</Button>
                 </DrawerClose>
@@ -150,12 +176,9 @@ export default function Component() {
                   <NavigationMenuItem key={item.name}>
                     {item.children.length > 0 ? (
                       <NavigationMenuTrigger
-                        className={`text-sm font-medium transition-all duration-300 ${
-                          isScrolled
-                            ? "text-muted-foreground"
-                            : "text-foreground"
-                        }`}
+                        className={`text-sm font-medium transition-all duration-300 flex flex-row gap-1`}
                       >
+                        {item.icon && <item.icon size={14}></item.icon>}
                         {item.name}
                       </NavigationMenuTrigger>
                     ) : (
@@ -164,7 +187,8 @@ export default function Component() {
                         href={item.href}
                         className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
                       >
-                        <div className="text-sm font-medium leading-none ">
+                        <div className="text-sm font-medium leading-none flex flex-row gap-1">
+                          {item.icon && <item.icon size={14}></item.icon>}
                           {item.name}
                         </div>
                       </Link>
@@ -175,13 +199,20 @@ export default function Component() {
                           <NavigationMenuLink key={child.name} asChild>
                             <Link
                               href={child.href}
-                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                              className="group flex items-center flex-row h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
                             >
-                              <div className="text-sm font-medium leading-none ">
-                                {child.name}
-                              </div>
-                              <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                {child.description}
+                              {child.icon && (
+                                <div className="mr-2">
+                                  <child.icon size={32}></child.icon>
+                                </div>
+                              )}
+                              <div className="">
+                                <div className="text-sm font-medium leading-none">
+                                  {child.name}
+                                </div>
+                                <div className="ml-2 mt-1 line-clamp-2 text-xs leading-snug text-muted-foreground">
+                                  {child.description}
+                                </div>
                               </div>
                             </Link>
                           </NavigationMenuLink>
@@ -194,8 +225,8 @@ export default function Component() {
             </NavigationMenu>
           </nav>
           <div className="hidden items-center gap-2 lg:flex">
-            <Button variant="outline">Sign in</Button>
-            <Button>Sign up</Button>
+            <AuthDrawer defaultTab={"login"}></AuthDrawer>
+            <AuthDrawer defaultTab={"register"}></AuthDrawer>
           </div>
         </div>
       </div>
