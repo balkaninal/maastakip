@@ -9,7 +9,7 @@ export const metadata = {
 };
 export default function Home() {
   return (
-    <main className="flex flex-col items-center gap-16 justify-start pt-24">
+    <>
       <div className="hero w-full">
         <LandingHero></LandingHero>
       </div>
@@ -27,6 +27,6 @@ export default function Home() {
       <div className="signup w-full">
         <LandingSignUp></LandingSignUp>
       </div>
-    </main>
+    </>
   );
 }

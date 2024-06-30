@@ -1,21 +1,29 @@
 "use client";
 import { useState, useEffect, JSX, SVGProps } from "react";
 import { Separator } from "@/components/ui/separator";
+import {
+  IconCoin,
+  IconCoins,
+  IconCurrencyDollar,
+  IconCurrencyEuro,
+  IconCurrencyLira,
+  IconCurrencyPound,
+} from "@tabler/icons-react";
 
 export default function CurrencyTracker() {
   const [exchangeRates, setExchangeRates] = useState({
-    USD: 1,
-    EUR: 0.91,
-    GBP: 0.81,
-    JPY: 135.24,
+    TRY: 1,
+    USD: 32.91,
+    EUR: 34.81,
+    GBP: 35.25,
   });
   useEffect(() => {
     const interval = setInterval(() => {
       setExchangeRates({
-        USD: 1,
-        EUR: Math.random() * 0.9 + 0.85,
-        GBP: Math.random() * 0.8 + 0.75,
-        JPY: Math.random() * 130 + 120,
+        TRY: 1,
+        USD: Math.random() * 30 + 0.5,
+        EUR: Math.random() * 32 + 0.85,
+        GBP: Math.random() * 35 + 0.75,
       });
     }, 5000);
     return () => clearInterval(interval);
@@ -23,21 +31,37 @@ export default function CurrencyTracker() {
   return (
     <div className=" px-4 py-2 flex items-center justify-center w-full max-w-7xl mx-auto">
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-          <DollarSignIcon className="w-4 h-4" />
-          <span>USD</span>
+        <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+          Mevcut dolar kuru
+        </div>
+        <Separator orientation="vertical" className="h-5" />
+        <div className="flex items-center gap-2 text-sm font-medium text-black">
+          <IconCurrencyLira className="w-4 h-4" />
+          <span>TRY</span>
           <span>1.00</span>
         </div>
         <Separator orientation="vertical" className="h-5" />
-        <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-          <EuroIcon className="w-4 h-4" />
+        <div className="flex items-center gap-2 text-sm font-medium text-black">
+          <IconCurrencyDollar className="w-4 h-4" />
+          <span>USD</span>
+          <span>{exchangeRates.USD.toFixed(2)}</span>
+        </div>
+        <Separator orientation="vertical" className="h-5" />
+        <div className="flex items-center gap-2 text-sm font-medium text-black">
+          <IconCurrencyEuro className="w-4 h-4" />
           <span>EUR</span>
           <span>{exchangeRates.EUR.toFixed(2)}</span>
         </div>
         <Separator orientation="vertical" className="h-5" />
-        <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-          <PoundSterlingIcon className="w-4 h-4" />
+        <div className="flex items-center gap-2 text-sm font-medium text-black">
+          <IconCurrencyPound className="w-4 h-4" />
           <span>GBP</span>
+          <span>{exchangeRates.GBP.toFixed(2)}</span>
+        </div>
+        <Separator orientation="vertical" className="h-5" />
+        <div className="flex items-center gap-2 text-sm font-medium text-black">
+          <IconCoins className="w-4 h-4" />
+          <span>ALT(gr)</span>
           <span>{exchangeRates.GBP.toFixed(2)}</span>
         </div>
       </div>

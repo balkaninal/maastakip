@@ -103,7 +103,7 @@ export default function Component() {
       <div className="container w-full flex items-center justify-between bg-white">
         <Link href="#" className="flex items-center gap-2" prefetch={false}>
           <MountainIcon
-            className={`h-6 w-6 transition-all duration-300 ${
+            className={`h-6 w-6 transition-all duration-300 text-primary ${
               isScrolled ? "scale-90" : "scale-100"
             }`}
           />
