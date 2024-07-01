@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities.Roles;
+using Domain.Entities.Users;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Persistence
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<AppUser>
     {
         public DataContext()
         {
@@ -17,6 +20,6 @@ namespace Persistence
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
-
+        
     }
 }

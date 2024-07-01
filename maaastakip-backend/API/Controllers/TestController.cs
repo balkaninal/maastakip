@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Persistence;
 
 namespace API.Controllers
@@ -13,7 +14,6 @@ namespace API.Controllers
         {
             _context = context;
         }
-
         [HttpGet("testconnection")]
         public async Task<IActionResult> TestConnection()
         {
